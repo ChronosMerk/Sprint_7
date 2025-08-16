@@ -20,14 +20,15 @@ class TestCreateCourier:
     @allure.title('Создание двух одинаковых курьеров')
     @allure.description('При обращение создании 2 курьера с одинаковыми данными выходит ошибка "Этот логин уже используется" и код ошибки 409')
     def test_create_two_identical_couriers_error(self, base_url_courier):
-        final_result = 'Этот логин уже используется'
+        final_result = 'Этот логин уже используется. Попробуйте другой.'
         data_courier = helpers.register_new_courier()
 
         cm = CourierMethods(base_url_courier)
         cm.create_courier(data_courier)
         response = cm.create_courier(data_courier)
+        body = response.json()
 
-        assert final_result in response.text and 409 == response.status_code
+        assert final_result == body['message'] and 409 == response.status_code
 
     @allure.description('Проверка 2 полей логин и пароль, без них будет ошибка 400 и сообщение Недостаточно данных')
     @pytest.mark.parametrize("input_value", ["login", "password"])
@@ -41,5 +42,6 @@ class TestCreateCourier:
 
         cm = CourierMethods(base_url_courier)
         response = cm.create_courier(data_courier)
+        body = response.json()
 
-        assert final_result in response.text and 400 == response.status_code
+        assert final_result == body['message'] and 400 == response.status_code

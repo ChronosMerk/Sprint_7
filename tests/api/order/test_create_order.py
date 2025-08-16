@@ -16,3 +16,12 @@ class TestLoginCourier:
         response = om.order_methods(data_order)
 
         assert response.status_code == 201 and "track" in response.text
+
+    @allure.title('Проверка на получение списка заказов')
+    @allure.description('Получение не пустого списка и статус код 200')
+    def test_list_order_success(self, base_url_order):
+        om = OrderMethods(base_url_order)
+        response = om.list_order()
+        body = response.json()
+
+        assert response.status_code == 200 and len(body) > 0
