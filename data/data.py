@@ -1,8 +1,8 @@
-
 class URLS:
-    BASE_URL = 'https://qa-scooter.praktikum-services.ru/api/v1'
-    COURIER_URL = '/courier'
-    ORDERS_URL = '/orders'
+    BASE = "https://qa-scooter.praktikum-services.ru/api/v1"
+    COURIER = f"{BASE}/courier"
+    LOGIN = f"{COURIER}/login"
+    ORDER = f"{BASE}/orders"
 
 class AuthorizationCourier:
     JSON_COURIER = {
